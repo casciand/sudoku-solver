@@ -30,23 +30,23 @@ bool SudokuBoard::solveBoard(bool trace) {
         traceSolver(trace);
     }
 
-    if (findOpen() == NO_OPEN) {
+    std::pair<int, int> next = findOpen();
+
+    if (next.first == -1 && next.second == -1) {
         return true;  // all spaces filled correctly
     }
 
-    std::pair<int, int> next = findOpen();
-
     for (int i = 1; i <= 9; ++i) {
-        if (isValid( i, next)) {
+        if (isValid(i, next)) {
             board[next.first][next.second] = i;  // set index to next valid value
 
             if (solveBoard(trace)) {  // move to next available index
                 return true;  // board solved
             }
+
+            board[next.first][next.second] = 0;
         }
     }
-
-    board[next.first][next.second] = 0;
 
     return false;  // no solution, backtrack
 }
@@ -94,11 +94,15 @@ std::pair<int, int> SudokuBoard::findOpen() const {
 }
 
 
-void SudokuBoard::traceSolver(bool trace) {
+void SudokuBoard::traceSolver(bool trace) const {
     if (trace) {
-        system("cls");
+        #if defined _WIN32
+            system("cls");
+        #elif defined __APPLE__
+            system("clear");
+        #endif
 
         printBoard();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
