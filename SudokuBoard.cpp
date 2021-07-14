@@ -27,7 +27,7 @@ void SudokuBoard::printBoard() const {
 
 bool SudokuBoard::solveBoard(bool trace) {
     if (trace) {
-        traceSolver(trace);
+        traceSolver();
     }
 
     std::pair<int, int> next = findOpen();
@@ -94,15 +94,13 @@ std::pair<int, int> SudokuBoard::findOpen() const {
 }
 
 
-void SudokuBoard::traceSolver(bool trace) const {
-    if (trace) {
-        #if defined _WIN32
-            system("cls");
-        #elif defined __APPLE__
-            system("clear");
-        #endif
+void SudokuBoard::traceSolver() const {
+    #if defined _WIN32
+        system("cls");
+    #elif defined __APPLE__
+        system("clear");
+    #endif
 
-        printBoard();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
+    printBoard();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }

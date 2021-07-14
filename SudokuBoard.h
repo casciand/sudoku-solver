@@ -17,7 +17,7 @@ private:
 
     bool isValid(int val, std::pair<int, int> coord) const;
     std::pair<int, int> findOpen() const;
-    void traceSolver(bool trace) const;
+    void traceSolver() const;
 
 public:
 
